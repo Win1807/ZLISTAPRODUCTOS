@@ -1,0 +1,13 @@
+{
+    "Name": "SAP FIORI",
+    "Street":"Calle los alamos",
+    "HouseNumber":"1234",
+    "ZIPCode":"2333",
+    "City":"Lima Gris",
+	"Country": "Germany",
+	"Url": "http://www.sap.com",
+	"Twitter": "@sap",
+	"Tel" : "+49 6227 747474",
+	"Email" : "info@sap.com"
+
+}

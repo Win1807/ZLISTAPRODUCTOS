@@ -1,0 +1,139 @@
+<mvc:View controllerName="wvega.com.zlistaproductos.controller.App"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    <App>
+        <pages>
+            <Page id="page" title="{i18n>title}">
+                <content>
+                    <IconTabBar >
+                        <items>
+                            <IconTabFilter text="Main" >
+                                <Carousel >
+                                    <Image 		src="https://hospitalveterinariodonostia.com/wp-content/uploads/2022/02/Personalidad-gatos-674x337.png"
+                                    height="200px"/>
+                                    <Image		src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Wikipedia_Hello_World_Graphic.svg/2000px-Wikipedia_Hello_World_Graphic.svg.png"
+                                    height="200px"/>
+                                </Carousel>
+                                <Button text="{i18n>showHelloButtonText}" press="onShowHello" /> 
+                                <Input value="{
+                                    path: 'helloPanel>/recipiente/name',
+                                    type: 'sap.ui.model.type.Float',
+                                    formatOptions: {minFrationDigits:2 },
+                                    constraints: {maximum:3000}                                    
+                                    }" 
+                                valueLiveUpdate="false" 
+                                description="Hello {helloPanel>/recipiente/name}"/> 
+                
+                            </IconTabFilter>
+                            <IconTabFilter id="layouts" text="{i18n>getLayoutText}">
+                                <MessageStrip
+                                    text="Default (Information) with default icon and close button:"
+                                    showIcon="true"                                
+                                    class="sapUiMediumMarginBottom"/>
+                                <f:SimpleForm id="simpleFormChange" title="Adress" class="editableForm  sapUiSmallMarginTopBottom" editable="true">
+                                    <Label text="{i18n>layoutFormName}"/>
+                                    <Input value="{address>/Name}"/>
+                                    <Label text="{i18n>layoutFormStreet}"/>
+                                    <Input value="{address>/Street}"/>
+                                    <Label text="{i18n>layoutFormHouseNumber}"/>
+                                    <Input value="{address>/HouseNumber}"/>
+                                    <Label text="{i18n>layoutFormZIPCode}"/>
+                                    <Input value="{address>/ZIPCode}"/>
+                                    <Label text="{i18n>layoutFormCity}"/>
+                                    <Input value="{address>/City}"/>
+
+                                    <Label text="{i18n>layoutFormCountry}"/>
+                                    <Select>
+                                        <items>
+                                            <core:Item text="{i18n>layoutCountryGermany}"/>
+                                            <core:Item text="{i18n>layoutCountryUSA}"/>
+                                            <core:Item text="{i18n>layoutCountryEngland}"/>
+                                        </items>
+                                    </Select>
+                                </f:SimpleForm>
+                                <Toolbar>
+                                    <ToolbarSpacer />
+                                    <Button text="{i18n>layoutPublishButton}" type="Accept" icon="sap-icon://outbox"/>
+                                    <Button text="{i18n>layoutDraftButton}" icon="sap-icon://save"/>
+                                </Toolbar>
+
+
+                            </IconTabFilter>
+                            <IconTabFilter text="{i18n>dataBindingFilter}" key="db">
+                                <content>
+                                    <List id="productList" headerText="{i18n>tituloListaProductos}" 
+                                    items="{
+                                        path: '/ProductSet',
+                                        parameters: [{expand:'ToSupplier'},{expand:'ToSalesOrderLineItems'}],
+
+                                       
+                                        sorter: {
+                                            path:'Category',
+                                            group:true
+                                        }}"
+                                        growing="true"
+                                        growingThreshold="5"
+                                        growingScrollToLoad="false">
+                                        <headerToolbar>
+                                          <Toolbar >
+                                            <Title text="{i18n>productListTitle}"/>
+                                            <ToolbarSpacer />
+                                            <SearchField width="50%" search="onFilterProducts"/>
+                                          </Toolbar>
+                                        </headerToolbar>
+                                        
+                                        <items>
+                                            <ObjectListItem title="{Name}" 
+                                            number="{
+                                                parts:[{path: 'Price'},
+                                                       {path: 'CurrencyCode'}
+                                                       ],
+                                                type: 'sap.ui.model.type.Currency', 
+                                                formatOptions:{
+                                                    showMeasure:false
+                                                }}"
+                                            numberUnit="{CurrencyCode}"
+                                             intro="{ProductID}" 
+                                             numberState="{= ${Price} > 500 ? 'Error': 'Success'}"
+                                             press="onItemSelected"
+                                             type="Active"
+                                             >
+                                                <firstStatus>
+                                                    <ObjectStatus text="{
+                                                        parts: [
+                                                                {path: 'WeightUnit'},
+                                                                {path: 'WeightMeasure'}
+                                                        ],
+                                                        formatter: '.formatter.delivery'
+                                                    }">
+                                                    
+                                                    </ObjectStatus>
+                                                </firstStatus>
+                                                <secondStatus>
+                                                    <ObjectStatus title="{i18n>statusDeliveryFrom}" 
+                                                                text="{ToSupplier/Address/City}"></ObjectStatus>
+                                                </secondStatus>
+                                             </ObjectListItem>
+                                        </items>
+                                    </List>
+                                    <Panel id="productDetailPanel" headerText="{i18n>productDetailPanelHeader}" visible="false">
+                                        <l:Grid >
+                                            <Text text="{i18n>productDetailPanelID}: {ProductID}"/>
+                                            <Text text="{i18n>productDetailPanelName}: {Name}"/>
+                                            <Text text="{i18n>productDetailPanelDescription}: {Description}"/>
+                                            <Text text="{i18n>productDetailPanelPrice}: {Price}"/>
+                                        </l:Grid>
+                                    </Panel>
+                                </content>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+            
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

@@ -1,0 +1,9 @@
+{
+    "recipiente":{
+        "name": "Munda",
+        "lastname":"Terra"
+    },
+    "recipient2": {
+        "direccion":"Comas calle N, "
+    }
+}
